@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chattrix 💬</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="chat-container">
+    <h1>💬 Chattrix</h1>
+    
+    <div id="chat-box"></div>
+    
+    <input
+      id="user-input"
+      type="text"
+      placeholder="Talk to me..."
+      autofocus
+    >
+    
+    <div>
+      <button id="send-button">Send</button>
+      <button onclick="window.open('https://open.spotify.com/playlist/5H4Mq5Ar66nFYpccworYjV?si=edcadbacd37c445c', '_blank')">🎵 Vibe Playlist</button>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
+    const chatBox = document.getElementById("chat-box");
+
+    // Send on click
+    sendButton.addEventListener("click", sendMessage);
+
+    // Send on Enter
+    input.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    async function sendMessage() {
+      const message = input.value.trim();
+      if (!message) return;
+
+      // Show user message
+      chatBox.innerHTML += `<div class='user-msg'>🧍‍♀️: ${message}</div>`;
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Add dot-only typing indicator
+      const typingEl = document.createElement("div");
+      typingEl.className = "bot-msg";
+      typingEl.id = "typing-indicator";
+      typingEl.textContent = "🤖";
+      chatBox.appendChild(typingEl);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // Animate the dots
+      let dotCount = 0;
+      const dotInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        typingEl.textContent = "🤖" + ".".repeat(dotCount);
+      }, 500);
+
+      try {
+        const res = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+
+        clearInterval(dotInterval);
+        typingEl.remove();
+
+        chatBox.innerHTML += `<div class='bot-msg'>🤖: ${data.reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (err) {
+        clearInterval(dotInterval);
+        typingEl.remove();
+
+        chatBox.innerHTML += `<div class='bot-msg'>🤖: server crashed 💀</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .chat-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 0;
+    color: #333;
+    font-size: 24px;
+  }
+  
+  #chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .user-msg, .bot-msg {
+    max-width: 75%;
+    margin: 6px 0;
+    padding: 10px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  
+  .user-msg {
+    align-self: flex-end;
+    background-color: #ffc8dd;
+    color: #000;
+    text-align: right;
+    border-bottom-right-radius: 0;
+  }
+  
+  .bot-msg {
+    align-self: flex-start;
+    background-color: #bde0fe;
+    color: #000;
+    text-align: left;
+    border-bottom-left-radius: 0;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    font-size: 14px;
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #5a54d1;
+  }
+  
+  /* Mobile specific tweaks */
+  @media (max-width: 480px) {
+    .chat-container {
+      padding: 15px;
+    }
+  
+    h1 {
+      font-size: 20px;
+    }
+  
+    input[type="text"] {
+      font-size: 14px;
+    }
+  
+    button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  
+    #chat-box {
+      height: 250px;
+    }
+  
+    .user-msg, .bot-msg {
+      font-size: 13px;
+    }
+  }
+  
